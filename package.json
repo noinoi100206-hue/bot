@@ -1,0 +1,13 @@
+{
+  "name": "discord-bot-3-messages",
+  "version": "1.0.0",
+  "description": "Bot Discord qui poste et supprime un message tous les 3 messages dans chaque salon",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.1"
+  }
+}
