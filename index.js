@@ -18,6 +18,21 @@ if (!token || token.includes('your_bot_token_here')) {
   process.exit(1);
 }
 
+// Default allowed channel IDs (voice channel IDs provided by user).
+const DEFAULT_ALLOWED = new Set([
+  '407488104050458747',
+  '1442902656036114482',
+  '1441990387685265419',
+  '1455769744559833311',
+  '1441990231619407903',
+  '1533140943811641516',
+]);
+
+// Optional allowlist: comma-separated channel IDs in .env. If present, it overrides the default.
+const ALLOWED_CHANNELS = process.env.ALLOWED_CHANNELS
+  ? new Set(process.env.ALLOWED_CHANNELS.split(',').map(s => s.trim()).filter(Boolean))
+  : DEFAULT_ALLOWED;
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -58,6 +73,8 @@ client.once('ready', () => {
       const channels = client.channels.cache.filter(c => c.isTextBased() && c.guild);
       for (const [id, channel] of channels) {
         try {
+          // If an allowlist is configured, skip channels not in it
+          if (ALLOWED_CHANNELS && !ALLOWED_CHANNELS.has(id)) continue;
           const perms = channel.permissionsFor(client.user);
           if (!perms || !perms.has([PermissionFlagsBits.SendMessages, PermissionFlagsBits.ViewChannel])) continue;
 
