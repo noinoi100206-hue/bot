@@ -20,7 +20,7 @@ if (!token || token.includes('your_bot_token_here')) {
 
 // Default allowed channel IDs (voice channel IDs provided by user).
 const DEFAULT_ALLOWED = new Set([
-  '407488104050458747',
+  '1407488104050458747',
   '1442902656036114482',
   '1441990387685265419',
   '1455769744559833311',
